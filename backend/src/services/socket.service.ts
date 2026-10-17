@@ -3,7 +3,10 @@ import { Server as SocketIOServer, Socket } from 'socket.io';
 import { Server as HttpServer } from 'http';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_fallback';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
 
 // This Map stores the active connections: { userId: socketId }
 export const connectedUsers = new Map<string, string>();
@@ -13,8 +16,9 @@ let io: SocketIOServer;
 export const initSocketServer = (server: HttpServer) => {
   io = new SocketIOServer(server, {
     cors: {
-      origin: '*', // In production, restrict this to your frontend domains
-      methods: ['GET', 'POST']
+      origin: ['https://golive.wiki', 'https://www.golive.wiki', 'http://localhost:3000', 'http://localhost:3001'],
+      methods: ['GET', 'POST'],
+      credentials: true,
     }
   });
 

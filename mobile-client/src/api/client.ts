@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-// NOTE: 10.0.2.2 is the localhost alias for Android Emulators. 
-// If you are testing on a physical device, replace this with your computer's local IPv4 address (e.g., 192.168.1.x)
-const API_URL = 'http://192.168.167.78:4000/api';
+// NOTE: Uses the production tunnel domain. For local development on physical device, 
+// replace with your computer's local IPv4 address (e.g., http://192.168.1.x:4000/api)
+const API_URL = 'https://api.golive.wiki/api';
 
 const apiClient = axios.create({
   baseURL: API_URL,

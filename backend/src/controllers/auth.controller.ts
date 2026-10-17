@@ -4,8 +4,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../db';
 
-// Fallback just in case the .env isn't read properly
-const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_fallback';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {

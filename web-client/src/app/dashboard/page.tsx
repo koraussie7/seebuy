@@ -58,7 +58,14 @@ export default function DashboardPage() {
             }
 
             if (userData) {
-                setUser(JSON.parse(userData));
+                try {
+                    setUser(JSON.parse(userData));
+                } catch {
+                    setUser({ email: 'User' });
+                }
+            } else {
+                // 토큰은 있지만 사용자 정보가 없어도 지도가 보이도록 폴백
+                setUser({ email: 'User' });
             }
 
             // Initialize Socket Connection
@@ -127,6 +134,9 @@ export default function DashboardPage() {
                             <h1 className="text-xl font-bold text-gray-900">GigMarket</h1>
                         </div>
                         <div className="flex items-center gap-4">
+                            <Link href="/dashboard/my-gigs" className="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                                My Gigs
+                            </Link>
                             <Link href="/dashboard/create" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors shadow-sm">
                                 + Post a Gig
                             </Link>
@@ -143,7 +153,7 @@ export default function DashboardPage() {
             </nav>
 
             {/* Main Map Area */}
-            <main className="flex-1 relative">
+            <main className="flex-1 relative h-screen">
                 <div className="absolute inset-0 z-0">
                     <TaskMap tasks={tasks} />
                 </div>

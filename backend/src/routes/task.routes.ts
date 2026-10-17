@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   createTask,
   getAllTasks,
+  getTaskById,
   acceptTask,
   getMyTasks,
   completeTask,
@@ -16,6 +17,7 @@ router.get("/", verifyToken, getAllTasks);
 
 // Add the new routes here:
 router.get("/my-gigs", verifyToken, getMyTasks);
+router.get("/:id", verifyToken, getTaskById);
 router.put("/:id/accept", verifyToken, acceptTask);
 router.put("/:id/complete", verifyToken, completeTask);
 

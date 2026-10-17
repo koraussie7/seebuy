@@ -87,6 +87,37 @@ export const getAllTasks = async (
   }
 };
 
+export const getTaskById = async (
+  req: AuthRequest,
+  res: Response,
+): Promise<void> => {
+  try {
+    const { id } = req.params as { id: string };
+
+    const task = await prisma.task.findUnique({
+      where: { id },
+      include: {
+        client: {
+          select: { id: true, firstName: true, lastName: true, email: true },
+        },
+        provider: {
+          select: { id: true, firstName: true, lastName: true },
+        },
+      },
+    });
+
+    if (!task) {
+      res.status(404).json({ error: "Task not found" });
+      return;
+    }
+
+    res.status(200).json({ task });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch task" });
+  }
+};
+
 export const acceptTask = async (
   req: AuthRequest,
   res: Response,

@@ -19,7 +19,7 @@ Where users authenticate, manage their dashboard, and broadcast new gigs to the 
 
 - **Framework:** Next.js 16 (App Router)
 - **Styling:** Tailwind CSS 4
-- **Maps:** React-Leaflet
+- **Maps:** Leaflet (vanilla, Turbopack PNG/`react-leaflet` 이슈 회피)
 - **Real-Time:** Socket.io-client
 
 ### 2. React Native Mobile App — Provider (`/mobile-client`)
@@ -139,6 +139,8 @@ Press `a` in the terminal to open the app on your Android emulator or connected 
 ## 🗺️ Mapping Strategy (Zero-Cost Setup)
 
 To keep the application completely free of external API billing (no Google Maps SDK limits), both the Next.js Web Client and the React Native Mobile App use OpenStreetMap tile layers. The mobile app injects a dynamic HTML string into a native WebView, rendering a fully interactive Leaflet map that matches the exact UI experience of the web dashboard.
+
+> Web map tiles: `tile-c.openstreetmap.fr/osmfr` (primary) → `tile.openstreetmap.org` (fallback). CARTO basemaps는 키 없는 요청에 워터마크를 반환하므로 사용하지 않음. 상세 기록: `web-client/MAP_TROUBLESHOOTING.md`.
 
 ## 📄 License
 

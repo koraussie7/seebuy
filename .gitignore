@@ -1,4 +1,10 @@
 # =========================
+# TypeScript Build Info
+# =========================
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# =========================
 # Operating System Files
 # =========================
 .DS_Store
